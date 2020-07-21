@@ -79,14 +79,17 @@ class Game():
 
     #------------
 
+
+
     def run(self):
+        n = 0
 
         clock = pygame.time.Clock()
 
         RUNNING = True
 
         while RUNNING:
-            # --- events ---
+
 
             # Список процессов в обработчике
             for event in pygame.event.get():
@@ -95,10 +98,24 @@ class Game():
                     RUNNING = False
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        RUNNING = False
+                    if event.key == pygame.K_DOWN:
 
-                    # changes position when key is pressed
+                        if n <= 10:
+
+                            try:
+                                self.multi_enemies[n-1].stay = True
+                            except:
+                                pass
+                            p = self.multi_enemies[n]
+                            n += 1
+                        else:
+                            n = 0
+
+
+
+
+
+
 
 
             # Перебор студентов и действия над ними
@@ -136,18 +153,26 @@ class Game():
             self.univ.draw(self.screen)
 
             # Отрисовка Михаила
-            self.regboy.get_info(self.screen)
+
 
             # Отриосвка остальных студентов
             for std in self.multi_enemies:
 
                 std.draw(self.screen)
 
+            try:
+                p.get_info(self.screen)
+
+                p.stay = False
+            except:
+                pass
             # Обновление экрана
+
             pygame.display.update()
 
             pygame.display.flip()
 
+            clock.tick(60)
 
         pygame.quit()
 

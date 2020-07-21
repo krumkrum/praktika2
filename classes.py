@@ -2,22 +2,24 @@ import random
 
 from pygame import image as img
 from pygame import font
-#Студент
-# Оценки - Результат
-# Успеваемость - Заинтересованость в оценках
-# Интеллект - Возможно повысить, возможно понизить влияет на оценки и успеваемость
-# Удача - Врожденный фактор, влияет на оценки и интеллект
-# Прописка - Влияет на мотиацию, интеллект, успеваемость
+
+
+# Студент
+#    Оценки - Результат
+#    Успеваемость - Заинтересованость в оценках
+#    Интеллект - Возможно повысить, возможно понизить влияет на оценки и успеваемость
+#    Удача - Врожденный фактор, влияет на оценки и интеллект
+#    Прописка - Влияет на мотиацию, интеллект, успеваемость
 
 
 
 WIDTH = 800
 HEIGHT = 500
 
-CAREER = 0.5 # (0 - 3) # increase luck
-INTEL = 0.5 # (0 - 3) # chance to have mark
-LUCK = 0.5  # (0 - 3) # chance to have big mark
-REG = 1 # 1 - home, 2 - domintory, 3 - rend
+CAREER = 0.5 # (0 - 3) # увеличивает
+INTEL = 0.5 # (0 - 3) # влияет на оценку
+LUCK = 0.5  # (0 - 3) # влияет на оценку
+REG = 1 # 1 - дома, 2 - общага, 3 - аренда
 
 
 
@@ -26,7 +28,7 @@ class Student():
     def __init__(self, name, career, intelegent, luck, registarition, A, B, C, D, image):
 
         super().__init__()
-
+        self.stay = True
         self.marks = [] # оценки
         self.name = name # имя
         self.career = career # Карьера
@@ -36,6 +38,7 @@ class Student():
         self.steps = 0 # количество пройденных шагов
 
         self.image = img.load(image) # Картинка для визуала
+
         self.image.set_colorkey((255,255,255))
         self.rect = self.image.get_rect() # Границы
 
@@ -61,12 +64,13 @@ class Student():
     def get_info(self, screen):
 
         f = font.Font(None, 24) # Шрифт
+
         try:
             k = self.marks[-1]  # Последняя оценка
         except:
             k = None
 
-        text1 = f.render("Тип - Обычный ", 1, (0, 180, 0))
+
         text2 = f.render(" Имя {0} ".format(self.name), 1, (0, 180, 0))
         text3 = f.render(" Удача {0} ".format(self.luck), 1, (0, 180, 0))
         text4 = f.render(" Интеллект {0} ".format(self.intelegent), 1, (0, 180, 0))
@@ -74,7 +78,7 @@ class Student():
         text6 = f.render(" Последняя оценка {0} ".format(k), 1, (0, 180, 0))
         text7 = f.render(" Прописка {0}".format(self.reg), 1, (0, 180, 0))
 
-        text = [text1, text2, text3, text4, text5, text6, text7]
+        text = [text2, text3, text4, text5, text6, text7]
 
         num = 30
 
@@ -82,21 +86,30 @@ class Student():
             screen.blit(i, (530, num))
             num += 25
 
+
+
+
+
+
+
+
+
     def update(self):
+        if self.stay == True:
+            # считаем щаги для удобства ввода действий
+            self.steps += 1
 
-        # считаем щаги для удобства ввода действий
-        self.steps += 1
+            # изменение позиции
+            self.rect.x += self.speed_x
+            self.rect.y += self.speed_y
 
-        # изменение позиции
-        self.rect.x += self.speed_x
-        self.rect.y += self.speed_y
+            if self.rect.centerx > (HEIGHT - 16) or (self.rect.centerx < 16):
+                self.speed_x = -1 * self.speed_x
 
-        if self.rect.centerx > (HEIGHT - 16) or (self.rect.centerx < 16):
-            self.speed_x = -1 * self.speed_x
-
-        if self.rect.centery > (HEIGHT - 16) or (self.rect.centery < 16):
-            self.speed_y = -1 * self.speed_y
-
+            if self.rect.centery > (HEIGHT - 16) or (self.rect.centery < 16):
+                self.speed_y = -1 * self.speed_y
+        else:
+            pass
 
 
     # ^ - Как функцию помощи между студентами
