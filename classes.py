@@ -216,6 +216,9 @@ class Student():
             k = random.randint(1, 100)
             # Великий рандом решает судьбу студента!
 
+            self.intelegent = round(self.intelegent, 4)
+            self.luck = round(self.luck, 4)
+            self.career = round(self.career, 4)
             #Получил 2
             if k < gr[3][0] and k >= gr[3][1]:
                 self.marks.append(2)
@@ -375,17 +378,17 @@ class Struction():
 
 class RendHouse(Struction):
     def __init__(self, x, y):
-        super().__init__(image='sprites/RendHome.png', x=x, y=y, type = 3)
+        super().__init__(image='sprites/RendHome.png', x=x, y=y, type = "Сьемная квартира")
 
 
 class Panel(Struction):
     def __init__(self, x, y):
-        super().__init__(image='sprites/Panel.png', x=x, y=y, type=1)
+        super().__init__(image='sprites/Panel.png', x=x, y=y, type="Дома с родителями")
 
 
 class Domintory(Struction):
     def __init__(self, x, y):
-        super().__init__(image='sprites/Domintory.png', x=x, y=y, type=2)
+        super().__init__(image='sprites/Domintory.png', x=x, y=y, type="Общага")
 
 
 
